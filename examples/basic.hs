@@ -107,11 +107,11 @@ type Tree := {
 } deriving Eq Show;
 
 type Point := {
-    x :: Int;
-    x :- 0; -- default
+    x :: Int,
+    x :- 0, -- default
 
-    y :: Int :- 0;
-} deriving Eq Show;
+    y :: Int :- 0.
+} deriving Eq Show.
 
 type Tree := {
     Empty
@@ -119,8 +119,8 @@ type Tree := {
   | Node { left :: Tree; right :: Tree; };
 };
 
-p  :- Point 2 3
-p' :- Point (x :- 4 y :- 5)
+p  :- Point 2 3.
+p' :- Point (x :- 4 y :- 5).
 
 t  :- Node Empty Empty
 t1 :- Node(Leaf(1), Node(Leaf(2), Leaf(3)));
@@ -153,6 +153,9 @@ type Bird :- {
     describe :- f"i say {.sing} while i {.move}"
 
 } deriving Show Eq;
+
+a /\ b
+b \/ b
 
 jay :- Bird
 println jay.move -- flap flap
@@ -208,32 +211,97 @@ type Sort-Args :- {
 sorter :: Sort-Args, [[String]] -> [[String]]
 sorter (Sort-Args (cmp col rev:False)) table :- {
     let { 
-        res :- sort ((\xy. x < cmp < y) filter (== (table `index` col)) table);
+        res :- sort ((\xy. x < cmp < y) filter (== (table `index` col)) table).
 
         res :- table
-            |> { filter (== (index table col)) }
-            |> { sort (\xy. x < cmp < y) };
+            |> { filter (== (index table col)). }
+            |> { sort (\xy: x < cmp < y) }.
 
-        res :- table.filter (== (index table col)).sort (\xy. x < cmp < y);
+        res :- table:filter (== (index table col)):sort (\xy: x < cmp < y).
     } in {
         if { rev } then {
-            reverse res
+            reverse (res).
         } else {
-            res
-        }
-    }
-};
+            res.
+        }.
+    }.
+}.
 
 sorter (Sort-Args (cmp col rev:False)) table :- {
-    if { rev; } then {
-        reverse res;
+    if { rev. } then {
+        reverse res.
     } else {
-        res;
-    };
+        res.
+    },
     where {
         res :- table
-            |> { filter (== (index table col)); } 
-            |> { sort (\xy. x < cmp < y); };
-    };
-};
+            |> { filter (== (index table col)). } 
+            |> { sort (\xy: x < cmp < y). }.
+    }.
+}.
+
+trait Eq :- {
+    equals? _ _ -> Bool,
+    equals? a b :- { ~(neq? a b). },
+
+    neq? _ _ -> Bool,
+    neq? a b :- { ~(equals? a b). }.
+}.
+
+type Point :- {
+    x :: Int,
+    x :- 0,
+
+    y :: Int,
+    y :- 0.
+}.
+
+type Tree :- {
+    Empty
+    | Leaf Int
+    | Node Tree Tree.
+}.
+
+type Tree :- {
+    Empty
+    | Leaf (item :: Int)
+    | Node (left :: Tree, right :: Tree).
+}
+
+type Point :- {
+    Point (x :: Int, y :: Int).
+}
+
+type Expr :- { Expr. }.
+
+x :- [1, 2, 3].
+x :- Cons 1 (Cons 2 (Cons 3 Nil)).
+y :- 3.
+z :- 3.45.
+a :- 'a'.
+b :- (\x. x + -1)
+
+6.3.14.2.
+
+[1,2.3,6,5.2].[4,4.4,6.6,8]
+6. 3.14. 2.'
+
+'a'. 'b'. 'c'
+
+(\x. x + 1) 6.
+
+{
+    6,
+    3.14,
+    'a',
+    + 3 2,
+    + 8 (+ 3 4),
+    (\x. x),
+    (\x. x + 1) 6,
+    (\x. \y. x + -y) 6 3.
+}
+
+
+
+
 
