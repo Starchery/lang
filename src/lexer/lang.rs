@@ -12,7 +12,7 @@ enum Token {
 #[derive(Debug, Clone)]
 pub(super) 
 enum Whitespace {
-    Space,
+    Space(usize),
     Newline,
 }
 

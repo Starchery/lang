@@ -79,6 +79,27 @@ impl<'a> Lexer<'a> {
                     },
                 }
             },
+
+            (_, '\n') => {
+                match self.stack.current {
+                    Some(Token::Whitespace(Newline)) => (),
+                    _ => {
+                        self.clear_stack();
+                        self.stack.current = Some(Token::Whitespace(Newline));
+                    },
+                }
+            },
+
+            (_, s) if s.is_ascii_whitespace() => {
+                match self.stack.current {
+                    Some(Token::Whitespace(Space(_))) => (),
+                    _ => {
+                        self.clear_stack();
+                        self.stack.current = Some(Token::Whitespace(Space(1)));
+                    },
+                }
+            },
+
             _ => {
                 self.clear_stack();
                 self.stack.current = Some(Token::Literal(Char(c.1)));
@@ -103,6 +124,7 @@ impl<'a> Lexer<'a> {
                         Token::Literal(Float(
                             self.stack.values.parse::<f64>().unwrap()))
                     },
+                    Token::Whitespace(Space(_)) => Token::Whitespace(Space(self.stack.values.len())),
                     _ => t.clone()
                 }
             )
@@ -119,15 +141,7 @@ impl<'a> Lexer<'a> {
 impl<'a> std::fmt::Display for Lexer<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "\"{}\" -> {:#?}", 
-               self.source
-                    .chars()
-                    .map(|c| 
-                         if c.is_ascii_whitespace() { 
-                             '_' 
-                         } else { 
-                             c 
-                         }
-                    ).collect::<String>(), 
-                self.tokens)
+            self.source .replace(" ", "_") .replace("\n", "\\n"),
+            self.tokens)
     }
 }
