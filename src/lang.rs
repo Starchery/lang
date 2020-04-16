@@ -4,7 +4,14 @@ enum Token {
     Literal(Literal),
     Keyword(Keyword),
     Identifier(&'static str),
+    Whitespace(Whitespace),
     EOF,
+}
+
+#[derive(Debug)]
+enum Whitespace {
+    Space,
+    Newline,
 }
 
 #[derive(Debug)]

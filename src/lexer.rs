@@ -18,4 +18,8 @@ impl Lexer {
         }
     }
 
+    fn tokenize(&mut self) -> Vec<Token> {
+        unimplemented!()
+    }
+}
 
