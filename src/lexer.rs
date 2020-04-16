@@ -54,20 +54,25 @@ impl<'a> Lexer<'a> {
                 }
             },
             (pos, '.') => {
-                match self.source.chars().nth(pos + 1) {
-                    Some(digit) if digit.is_ascii_digit() => {
-                        match self.stack.current {
-                            Token::Literal(Float(_)) => (),
-                            Token::Literal(Int(_)) => { 
-                                self.stack.current = Token::Literal(Float(0.0));
+                match self.stack.current {
+                    Token::Literal(Float(_)) | Token::Literal(Int(_)) => { 
+                        match self.source.chars().nth(pos + 1) {
+                            Some(digit) if digit.is_ascii_digit() => {
+                                match self.stack.current {
+                                    Token::Literal(Float(_)) => (),
+                                    Token::Literal(Int(_)) => { 
+                                        self.stack.current = Token::Literal(Float(0.0));
+                                    },
+                                    _ => (),
+                                }
                             },
-                            _ => {
-                                self.clear_stack();
-                                self.stack.current = Token::Symbol(Dot);
-                            },
+                            _ => (),
                         }
                     },
-                    _ => (),
+                    _ => { 
+                        self.clear_stack();
+                        self.stack.current = Token::Symbol(Dot); 
+                    },
                 }
             },
             _ => self.tokens.push(Token::Literal(Char(c.1))),
