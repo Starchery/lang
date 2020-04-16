@@ -104,29 +104,6 @@ impl<'a> Lexer<'a> {
         self.stack.values.clear();
     }
 
-// let mut peeker = self.source.char_indices()
-// .skip(pos)
-// .take_while(|digit| digit.is_ascii_digit() || digit == '.')
-// .map(|digit| match digit {
-// (idx, '.') => match self.source.chars().nth(idx + 1) {
-// Some('0'..='9') => self.tokens.push(
-// Token::Literal(Float(
-// self.source.get(pos..(
-// self.source.char_indices()
-// .skip(idx)
-// .take_while(|frac|
-// frac[1].is_ascii_digit()
-// ).last()
-// .unwrap()[0]))
-// .parse::<f64>()
-// .unwrap()))),
-// (idx, '0'..='9') =>
-// )),
-// )
-
-// });
-// }
-
     pub(crate) 
     fn print_greeting(&self) {
         lang::print_test()
