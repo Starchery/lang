@@ -118,6 +118,16 @@ impl<'a> Lexer<'a> {
 
 impl<'a> std::fmt::Display for Lexer<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "\"{}\" -> {:#?}", self.source, self.tokens)
+        write!(f, "\"{}\" -> {:#?}", 
+               self.source
+                    .chars()
+                    .map(|c| 
+                         if c.is_ascii_whitespace() { 
+                             '_' 
+                         } else { 
+                             c 
+                         }
+                    ).collect::<String>(), 
+                self.tokens)
     }
 }
