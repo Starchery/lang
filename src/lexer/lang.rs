@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(super) 
 enum Token {
     Symbol(Symbol),
@@ -9,19 +9,19 @@ enum Token {
     EOF,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(super) 
 enum Whitespace {
     Space,
     Newline,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(super) 
 enum Keyword {
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(super) 
 enum Symbol {
     /* delimiters */
@@ -37,7 +37,7 @@ enum Symbol {
     Assign,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(super) 
 enum Literal {
     Char(char),
