@@ -22,7 +22,9 @@ impl<'a> Lexer<'a> {
     }
 
     fn tokenize(&mut self) -> Vec<Token> {
-        unimplemented!()
+        self.source.char_indices().map(|c| match c {
+            
+        })
     }
 
     pub(crate) 
