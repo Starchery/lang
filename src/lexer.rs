@@ -1,17 +1,20 @@
 mod lang;
 
-use crate::lang::*;
-use crate::lang::Whitespace::*;
-use crate::lang::Symbol::*;
-use crate::lang::Literal::*;
+use lang::Token;
+use lang::Whitespace::*;
+use lang::Symbol::*;
+use lang::Literal::*;
 
-struct Lexer {
-    source: &'static str,
+#[derive(Debug)]
+pub(crate) 
+struct Lexer<'a> {
+    source: &'a str,
     tokens: Vec<Token>,
 }
 
-impl Lexer {
-    fn new(program: &str) -> Lexer {
+impl<'a> Lexer<'a> {
+    pub(crate) 
+    fn new(program: &'a str) -> Lexer<'a> {
         Lexer {
             source: program,
             tokens: Vec::new(),
@@ -20,6 +23,11 @@ impl Lexer {
 
     fn tokenize(&mut self) -> Vec<Token> {
         unimplemented!()
+    }
+
+    pub(crate) 
+    fn print_greeting(&self) {
+        lang::print_test()
     }
 }
 

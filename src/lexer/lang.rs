@@ -1,4 +1,5 @@
 #[derive(Debug)]
+pub(super) 
 enum Token {
     Symbol(Symbol),
     Literal(Literal),
@@ -9,23 +10,26 @@ enum Token {
 }
 
 #[derive(Debug)]
+pub(super) 
 enum Whitespace {
     Space,
     Newline,
 }
 
 #[derive(Debug)]
+pub(super) 
 enum Keyword {
 }
 
 #[derive(Debug)]
+pub(super) 
 enum Symbol {
     /* delimiters */
     LParen, RParen,
     LBrace, RBrace,
+    Comma, Dot,
 
     /* single-char */
-    Dot, Comma,
     Lambda,
     Plus, Minus,
 
@@ -34,21 +38,24 @@ enum Symbol {
 }
 
 #[derive(Debug)]
+pub(super) 
 enum Literal {
     Char(char),
     Int(i32),
     Float(f64),
 }
 
-pub fn print_test() {
-    println!("Hola from 'lexer.rs'");
-    let lparen = Token::Symbol(Symbol::LParen);
-    let lambda = Token::Symbol(Symbol::Lambda);
+pub(super) 
+fn print_test() {
+    println!("Hola from 'lang.rs'");
+    use Symbol::*;
+    let lparen = Token::Symbol(LParen);
+    let lambda = Token::Symbol(Lambda);
     let x      = Token::Identifier("x");
-    let dot    = Token::Symbol(Symbol::Dot);
+    let dot    = Token::Symbol(Dot);
     let x2     = Token::Identifier("x");
-    let rparen = Token::Symbol(Symbol::RParen);
-    let dot2   = Token::Symbol(Symbol::Dot);
+    let rparen = Token::Symbol(RParen);
+    let dot2   = Token::Symbol(Dot);
     let eof    = Token::EOF;
     let abstraction = vec![lparen, lambda, x, dot, x2, rparen, dot2, eof];
     println!("{:?}", abstraction);
