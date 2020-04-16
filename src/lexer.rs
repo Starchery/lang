@@ -79,8 +79,11 @@ impl<'a> Lexer<'a> {
                     },
                 }
             },
-            _ => self.tokens.push(Token::Literal(Char(c.1))),
-        }; self.stack.values.push(c.1)}).last();
+            _ => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Literal(Char(c.1)));
+            },
+        }; self.stack.values.push(c.1); }).last();
 
         self.clear_stack();
         self.tokens.push(Token::EOF);
@@ -113,3 +116,8 @@ impl<'a> Lexer<'a> {
     }
 }
 
+impl<'a> std::fmt::Display for Lexer<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "\"{}\" -> {:#?}", self.source, self.tokens)
+    }
+}

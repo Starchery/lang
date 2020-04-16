@@ -3,9 +3,9 @@ mod lexer;
 fn main() {
     println!("Hello, world!");
 
-    let mut lex = lexer::Lexer::new("3.14");
+    let mut lex = lexer::Lexer::new("(3)");
     lex.tokenize();
-    println!("{:?}", lex);
+    println!("{}", lex);
 
     // lex.print_greeting();
 }
