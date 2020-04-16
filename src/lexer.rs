@@ -61,7 +61,6 @@ impl<'a> Lexer<'a> {
                                 match self.stack.current {
                                     Some(Token::Literal(Float(_))) => (),
                                     Some(Token::Literal(Int(_))) => { 
-                                        // self.stack.current = Some(Token::Literal(Float(digit.to_digit(10).unwrap() as f64)));
                                         self.stack.current = Some(Token::Literal(Float(self.source.get(pos - 1..pos + 2).unwrap().parse::<f64>().unwrap())));
                                     },
                                     _ => (),
@@ -79,7 +78,34 @@ impl<'a> Lexer<'a> {
                     },
                 }
             },
-
+            (_, '+') if !matches!(self.stack.current, Some(Token::Symbol(Plus))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(Plus));
+            },
+            (_, '-') if !matches!(self.stack.current, Some(Token::Symbol(Minus))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(Minus));
+            },
+            (_, '(') if !matches!(self.stack.current, Some(Token::Symbol(LParen))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(LParen));
+            },
+            (_, ')') if !matches!(self.stack.current, Some(Token::Symbol(RParen))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(RParen));
+            },
+            (_, '{') if !matches!(self.stack.current, Some(Token::Symbol(LBrace))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(LParen));
+            },
+            (_, '}') if !matches!(self.stack.current, Some(Token::Symbol(RBrace))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(RParen));
+            },
+            (_, ',') if !matches!(self.stack.current, Some(Token::Symbol(Comma))) => {
+                self.clear_stack();
+                self.stack.current = Some(Token::Symbol(Comma));
+            },
             (_, '\n') => {
                 match self.stack.current {
                     Some(Token::Whitespace(Newline)) => (),
