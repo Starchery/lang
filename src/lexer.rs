@@ -40,7 +40,7 @@ impl<'a> Lexer<'a> {
 
     pub(crate)
     fn tokenize(&mut self) {
-        self.source.char_indices().map(|c| { match c {
+        self.source.char_indices().map(|c| { /* println!("dealing with {} now", c.1); */ match c {
             (_, '0'..='9') => {
                 match self.stack.current {
                     Token::Literal(Int(_)) 
@@ -66,7 +66,10 @@ impl<'a> Lexer<'a> {
                                     _ => (),
                                 }
                             },
-                            _ => (),
+                            _ => { 
+                                self.clear_stack();
+                                self.stack.current = Token::Symbol(Dot); 
+                            },
                         }
                     },
                     _ => { 
@@ -83,8 +86,8 @@ impl<'a> Lexer<'a> {
     }
 
     fn clear_stack(&mut self) {
-        println!("entering clear_stack with:");
-        println!("{:?}", self);
+        // println!("entering clear_stack with:");
+        // println!("{:?}", self);
         self.tokens.push(
             match self.stack.current {
                 Token::Literal(Int(_)) => {
