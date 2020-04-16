@@ -1,6 +1,6 @@
-mod lexer;
+mod lang;
 
 fn main() {
     println!("Hello, world!");
-    lexer::print_test();
+    lang::print_test();
 }
