@@ -1,6 +1,6 @@
 mod lang;
 
-use lang::Token;
+use lang::Token as T;
 use lang::Whitespace::*;
 use lang::Symbol::*;
 use lang::Literal::*;
@@ -10,13 +10,13 @@ pub(crate)
 struct Lexer<'a> {
     source: &'a str,
     stack: Stack,
-    tokens: Vec<Token>,
+    tokens: Vec<T>,
 }
 
 #[derive(Debug)]
 struct Stack {
     values: String,
-    current: Option<Token>
+    current: Option<T>
 }
 
 impl Stack {
@@ -43,97 +43,97 @@ impl<'a> Lexer<'a> {
         self.source.char_indices().map(|c| { /* println!("dealing with {} now", c.1); */ match c {
             (_, '0'..='9') => {
                 match self.stack.current {
-                    Some(Token::Literal(Int(_)))
-                  | Some(Token::Literal(Float(_)))
-                  | Some(Token::Identifier(_)) => (),
+                    Some(T::Literal(Int(_)))
+                  | Some(T::Literal(Float(_)))
+                  | Some(T::Identifier(_)) => (),
 
                     _ => {
                         self.clear_stack();
-                        self.stack.current = Some(Token::Literal(Int(c.1.to_digit(10).unwrap() as i32)));
+                        self.stack.current = Some(T::Literal(Int(c.1.to_digit(10).unwrap() as i32)));
                     },
                 }
             },
             (pos, '.') => {
                 match self.stack.current {
-                    Some(Token::Literal(Float(_))) | Some(Token::Literal(Int(_))) => { 
+                    Some(T::Literal(Float(_))) | Some(T::Literal(Int(_))) => { 
                         match self.source.chars().nth(pos + 1) {
                             Some(digit) if digit.is_ascii_digit() => {
                                 match self.stack.current {
-                                    Some(Token::Literal(Float(_))) => (),
-                                    Some(Token::Literal(Int(_))) => { 
-                                        self.stack.current = Some(Token::Literal(Float(self.source.get(pos - 1..pos + 2).unwrap().parse::<f64>().unwrap())));
+                                    Some(T::Literal(Float(_))) => (),
+                                    Some(T::Literal(Int(_))) => { 
+                                        self.stack.current = Some(T::Literal(Float(self.source.get(pos - 1..pos + 2).unwrap().parse::<f64>().unwrap())));
                                     },
                                     _ => (),
                                 }
                             },
                             _ => { 
                                 self.clear_stack();
-                                self.stack.current = Some(Token::Symbol(Dot)); 
+                                self.stack.current = Some(T::Symbol(Dot)); 
                             },
                         }
                     },
                     _ => { 
                         self.clear_stack();
-                        self.stack.current = Some(Token::Symbol(Dot)); 
+                        self.stack.current = Some(T::Symbol(Dot)); 
                     },
                 }
             },
-            (_, '+') if !matches!(self.stack.current, Some(Token::Symbol(Plus))) => {
+            (_, '+') if !matches!(self.stack.current, Some(T::Symbol(Plus))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(Plus));
+                self.stack.current = Some(T::Symbol(Plus));
             },
-            (_, '-') if !matches!(self.stack.current, Some(Token::Symbol(Minus))) => {
+            (_, '-') if !matches!(self.stack.current, Some(T::Symbol(Minus))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(Minus));
+                self.stack.current = Some(T::Symbol(Minus));
             },
-            (_, '(') if !matches!(self.stack.current, Some(Token::Symbol(LParen))) => {
+            (_, '(') if !matches!(self.stack.current, Some(T::Symbol(LParen))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(LParen));
+                self.stack.current = Some(T::Symbol(LParen));
             },
-            (_, ')') if !matches!(self.stack.current, Some(Token::Symbol(RParen))) => {
+            (_, ')') if !matches!(self.stack.current, Some(T::Symbol(RParen))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(RParen));
+                self.stack.current = Some(T::Symbol(RParen));
             },
-            (_, '{') if !matches!(self.stack.current, Some(Token::Symbol(LBrace))) => {
+            (_, '{') if !matches!(self.stack.current, Some(T::Symbol(LBrace))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(LParen));
+                self.stack.current = Some(T::Symbol(LParen));
             },
-            (_, '}') if !matches!(self.stack.current, Some(Token::Symbol(RBrace))) => {
+            (_, '}') if !matches!(self.stack.current, Some(T::Symbol(RBrace))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(RParen));
+                self.stack.current = Some(T::Symbol(RParen));
             },
-            (_, ',') if !matches!(self.stack.current, Some(Token::Symbol(Comma))) => {
+            (_, ',') if !matches!(self.stack.current, Some(T::Symbol(Comma))) => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Symbol(Comma));
+                self.stack.current = Some(T::Symbol(Comma));
             },
             (_, '\n') => {
                 match self.stack.current {
-                    Some(Token::Whitespace(Newline)) => (),
+                    Some(T::Whitespace(Newline)) => (),
                     _ => {
                         self.clear_stack();
-                        self.stack.current = Some(Token::Whitespace(Newline));
+                        self.stack.current = Some(T::Whitespace(Newline));
                     },
                 }
             },
 
             (_, s) if s.is_ascii_whitespace() => {
                 match self.stack.current {
-                    Some(Token::Whitespace(Space(_))) => (),
+                    Some(T::Whitespace(Space(_))) => (),
                     _ => {
                         self.clear_stack();
-                        self.stack.current = Some(Token::Whitespace(Space(1)));
+                        self.stack.current = Some(T::Whitespace(Space(1)));
                     },
                 }
             },
 
             _ => {
                 self.clear_stack();
-                self.stack.current = Some(Token::Literal(Char(c.1)));
+                self.stack.current = Some(T::Literal(Char(c.1)));
             },
         }; self.stack.values.push(c.1); }).last();
 
         self.clear_stack();
-        self.tokens.push(Token::EOF);
+        self.tokens.push(T::EOF);
     }
 
     fn clear_stack(&mut self) {
@@ -142,15 +142,15 @@ impl<'a> Lexer<'a> {
         if let Some(t) = &self.stack.current {
             self.tokens.push(
                 match t {
-                    Token::Literal(Int(_)) => {
-                        Token::Literal(Int(
+                    T::Literal(Int(_)) => {
+                        T::Literal(Int(
                             self.stack.values.parse::<i32>().unwrap()))
                     },
-                    Token::Literal(Float(_)) => {
-                        Token::Literal(Float(
+                    T::Literal(Float(_)) => {
+                        T::Literal(Float(
                             self.stack.values.parse::<f64>().unwrap()))
                     },
-                    Token::Whitespace(Space(_)) => Token::Whitespace(Space(self.stack.values.len())),
+                    T::Whitespace(Space(_)) => T::Whitespace(Space(self.stack.values.len())),
                     _ => t.clone()
                 }
             )
