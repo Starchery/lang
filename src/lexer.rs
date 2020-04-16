@@ -61,7 +61,8 @@ impl<'a> Lexer<'a> {
                                 match self.stack.current {
                                     Some(Token::Literal(Float(_))) => (),
                                     Some(Token::Literal(Int(_))) => { 
-                                        self.stack.current = Some(Token::Literal(Float(c.1.to_digit(10).unwrap() as f64)));
+                                        // self.stack.current = Some(Token::Literal(Float(digit.to_digit(10).unwrap() as f64)));
+                                        self.stack.current = Some(Token::Literal(Float(self.source.get(pos - 1..pos + 2).unwrap().parse::<f64>().unwrap())));
                                     },
                                     _ => (),
                                 }
