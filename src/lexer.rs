@@ -16,14 +16,14 @@ struct Lexer<'a> {
 #[derive(Debug)]
 struct Stack {
     values: String,
-    current: Token,
+    current: Option<Token>
 }
 
 impl Stack {
     fn new() -> Stack {
         Stack {
             values: String::new(),
-            current: Token::EOF,
+            current: None,
         }
     }
 }
@@ -43,38 +43,38 @@ impl<'a> Lexer<'a> {
         self.source.char_indices().map(|c| { /* println!("dealing with {} now", c.1); */ match c {
             (_, '0'..='9') => {
                 match self.stack.current {
-                    Token::Literal(Int(_)) 
-                  | Token::Literal(Float(_)) 
-                  | Token::Identifier(_) => (),
+                    Some(Token::Literal(Int(_)))
+                  | Some(Token::Literal(Float(_)))
+                  | Some(Token::Identifier(_)) => (),
 
                     _ => {
                         self.clear_stack();
-                        self.stack.current = Token::Literal(Int(0));
+                        self.stack.current = Some(Token::Literal(Int(c.1.to_digit(10).unwrap() as i32)));
                     },
                 }
             },
             (pos, '.') => {
                 match self.stack.current {
-                    Token::Literal(Float(_)) | Token::Literal(Int(_)) => { 
+                    Some(Token::Literal(Float(_))) | Some(Token::Literal(Int(_))) => { 
                         match self.source.chars().nth(pos + 1) {
                             Some(digit) if digit.is_ascii_digit() => {
                                 match self.stack.current {
-                                    Token::Literal(Float(_)) => (),
-                                    Token::Literal(Int(_)) => { 
-                                        self.stack.current = Token::Literal(Float(0.0));
+                                    Some(Token::Literal(Float(_))) => (),
+                                    Some(Token::Literal(Int(_))) => { 
+                                        self.stack.current = Some(Token::Literal(Float(c.1.to_digit(10).unwrap() as f64)));
                                     },
                                     _ => (),
                                 }
                             },
                             _ => { 
                                 self.clear_stack();
-                                self.stack.current = Token::Symbol(Dot); 
+                                self.stack.current = Some(Token::Symbol(Dot)); 
                             },
                         }
                     },
                     _ => { 
                         self.clear_stack();
-                        self.stack.current = Token::Symbol(Dot); 
+                        self.stack.current = Some(Token::Symbol(Dot)); 
                     },
                 }
             },
@@ -88,19 +88,21 @@ impl<'a> Lexer<'a> {
     fn clear_stack(&mut self) {
         // println!("entering clear_stack with:");
         // println!("{:?}", self);
-        self.tokens.push(
-            match self.stack.current {
-                Token::Literal(Int(_)) => {
-                    Token::Literal(Int(
-                        self.stack.values.parse::<i32>().unwrap()))
-                },
-                Token::Literal(Float(_)) => {
-                    Token::Literal(Float(
-                        self.stack.values.parse::<f64>().unwrap()))
-                },
-                _ => self.stack.current.clone()
-            }
-        );
+        if let Some(t) = &self.stack.current {
+            self.tokens.push(
+                match t {
+                    Token::Literal(Int(_)) => {
+                        Token::Literal(Int(
+                            self.stack.values.parse::<i32>().unwrap()))
+                    },
+                    Token::Literal(Float(_)) => {
+                        Token::Literal(Float(
+                            self.stack.values.parse::<f64>().unwrap()))
+                    },
+                    _ => t.clone()
+                }
+            )
+        }
         self.stack.values.clear();
     }
 
