@@ -1,3 +1,7 @@
+pub(super)
+trait Lexeme {
+}
+
 #[derive(Debug, Clone)]
 pub(super) 
 enum Token {
@@ -9,6 +13,9 @@ enum Token {
     EOF,
 }
 
+impl Lexeme for Token {
+}
+
 #[derive(Debug, Clone)]
 pub(super) 
 enum Whitespace {
@@ -16,9 +23,16 @@ enum Whitespace {
     Newline,
 }
 
+impl Lexeme for Whitespace {
+}
+
 #[derive(Debug, Clone)]
 pub(super) 
 enum Keyword {
+}
+
+
+impl Lexeme for Keyword {
 }
 
 #[derive(Debug, Clone)]
@@ -37,12 +51,18 @@ enum Symbol {
     Assign,
 }
 
+impl Lexeme for Symbol {
+}
+
 #[derive(Debug, Clone)]
 pub(super) 
 enum Literal {
     Char(char),
     Int(i32),
     Float(f64),
+}
+
+impl Lexeme for Literal {
 }
 
 pub(super) 
