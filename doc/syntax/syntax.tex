@@ -11,13 +11,17 @@
     \usepackage{url}
     \usepackage{hyperref}
     \usepackage{listings}
+    \usepackage{xcolor}
 
     \lstset{
         language=Haskell,
         basicstyle=\footnotesize\ttfamily,
-        frame=single,
         keepspaces=true,
-        tabsize=4
+        tabsize=4,
+        morekeywords={
+            Nat,
+            println
+        }
     }
 
     \newcommand{\code}{\lstinline}
@@ -39,62 +43,131 @@
 %----------------------------------------------------------------------------%
 
 \begin{document}
-    \maketitle
-    \tableofcontents
+\maketitle
+\tableofcontents
 
-    \newpage
+\newpage
 
-    \section{Introduction}
-        This paper walks through the "Syntax Across Languages" \cite{SAL}
-        page, describing how each phenomenon it references would be translated
-        into valid \textsc{Lang} syntax.
+\section{Introduction}
+    This paper walks through the "Syntax Across Languages" \cite{SAL}
+    page, describing how each phenomenon it references would be translated
+    into valid \textsc{Lang} syntax.
 
-        This is meant not as an introductory guide to \textsc{Lang}, but as a sort 
-        of formal reference for how common design patterns would appear 
-        in \textsc{Lang} code out in the wild.
+    This is meant not as an introductory guide to \textsc{Lang}, but as a sort 
+    of formal reference for how common design patterns would appear 
+    in \textsc{Lang} code out in the wild.
 
-    \section{Miscellaneous} 
-        \subsection{Commenting}
-            \begin{data}
-                Until end of line & 
-                    \code|-- This is a comment.| \br
-                Nestable          & 
-                    \code$--/ This is a comment. /--$
-            \end{data}
 
-            \subsubsection{Documentation comment}
-                \begin{data}
-                    Until end of line & 
-                        \code|-- This is a comment.| \br
-                    Nestable          & 
-                        \code$--| This is a comment. |--$
-                \end{data}
+\section{Miscellaneous} 
+\subsection{Commenting}
+    \begin{data}
+        Until end of line & 
+            \code|-- This is a comment.| \br
+        Nestable          & 
+            \code$--/ This is a comment. /--$
+    \end{data}
 
-        \subsection{Tokens}
-            \begin{data}
-                Case-sensitive       & 
-                    \code|x =/= X.| \br
-                kebab-case-variables & 
-                    \code|avogadro's-number := 6.022e23.| \br
-                Upper-Kebab-Types    & 
-                    \code|type 2D-Point := { x: Z, y: Z. }.| \br
-                Identifier regexp    & 
-                    \code|[_a-zA-Z!0&*/:<=>?^][_a-zA-Z!0&*/:<=>?^0-9.+-]*|
-            \end{data}
-            
-        \subsection{Variable assignment/declaration}
-            \begin{data}
-                Declaration        & 
-                    \code|x := 3.|             \br
-                Assignment         & 
-                    \code|x :- 3. x :- x + 2.| \br
-                Scoped Declaration & 
-                    \code|let x := expr in { ... }|
-            \end{data}
+\subsection{Documentation comment}
+    \begin{data}
+        Until end of line & 
+            \code|-- This is a comment.| \br
+        Nestable          & 
+            \code$--| This is a comment. |--$
+    \end{data}
 
-    % TODO: add more stuff
+\subsection{Tokens}
+    \begin{data}
+        Case-sensitive       & 
+            \code|x =/= X.| \br
+        kebab-case-variables & 
+            \code|avogadro's-number := 6.022e23.| \br
+        Upper-Kebab-Types    & 
+            \code|type 2D-Point := { x: Z, y: Z. }.|
+    \end{data}
+    
+\subsection{Variable assignment/declaration}
+    \begin{data}
+        Declaration        & 
+            \begin{lstlisting}[mathescape=true]
+-- separate type annotation
+a: Nat. 
+a := 3.
 
-    \newpage
-    \bibliographystyle{apalike}
-    \bibliography{syntax}
+-- together
+b: Int := -4. 
+
+-- inferred
+$\tau$ := 2 * $\pi$. 
+            \end{lstlisting} \br
+        Assignment         & 
+            \begin{lstlisting}
+x :- 3. -- mutable
+x :- x + 2. 
+            \end{lstlisting} \br
+        Scoped Declaration & 
+            \code|let x := expr in { ... }.|
+    \end{data}
+
+\subsection{Grouping}
+    \begin{data}
+        Expressions       & 
+            \code|empty? (filter even? xs)| \br
+        Statements & 
+            \begin{lstlisting}
+-- explicit (brace style)
+x := { 
+    y := 3, 
+    println "if then else expr",
+    if { z := y + 2, z < 6. }
+    then { y. } 
+    else { (y * 3) + 2. }.
+}.
+
+-- implicit (indentation style)
+x :=
+    y := 3,
+    println "if then else expr",
+    if z := y + 2, z < 6 
+    then y
+    else (y * 3) + 2.
+            \end{lstlisting}
+    \end{data}
+
+\subsection{Comparisons}
+\begin{data}
+    Deep Equality  & 
+        \code[mathescape=true]
+        |$\pi$ = $\tau$ / 2, 3 =/= 4.|       \br
+    Comparison     &
+        \code|x > y, y < x. a <= b, b >= a.| \br
+    Ordering (inferior, equal, or superior) &
+        \code|compare "abc" "bac". -- LT|    \br
+    Extreme values &
+        \code|min [1, 2, 3], max 1 2 3.|
+\end{data}
+
+
+\section{Functions}
+\subsection{Function calls}
+\begin{data}
+    Parametrized  &
+        \code|f a b| \br
+    No parameters &
+        \code|f|     \br
+    Partial application (given 1\textsuperscript{st}) &
+        \code|map filter(even?) xs| \br
+    \textcolor{white}{
+    Partial application} (given 2\textsuperscript{nd}) &
+        \code|map filter(,xs) [even?, divisible-by-3?]| \br
+\end{data}
+
+% TODO: add more stuff
+
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
+
+\newpage
+\bibliographystyle{apalike}
+\bibliography{syntax}
 \end{document}

@@ -1,6 +1,10 @@
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}% 
 \contentsline {section}{\numberline {2}Miscellaneous}{2}{section.2}% 
 \contentsline {subsection}{\numberline {2.1}Commenting}{2}{subsection.2.1}% 
-\contentsline {subsubsection}{\numberline {2.1.1}Documentation comment}{2}{subsubsection.2.1.1}% 
-\contentsline {subsection}{\numberline {2.2}Tokens}{2}{subsection.2.2}% 
-\contentsline {subsection}{\numberline {2.3}Variable assignment/declaration}{2}{subsection.2.3}% 
+\contentsline {subsection}{\numberline {2.2}Documentation comment}{2}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.3}Tokens}{2}{subsection.2.3}% 
+\contentsline {subsection}{\numberline {2.4}Variable assignment/declaration}{3}{subsection.2.4}% 
+\contentsline {subsection}{\numberline {2.5}Grouping}{3}{subsection.2.5}% 
+\contentsline {subsection}{\numberline {2.6}Comparisons}{4}{subsection.2.6}% 
+\contentsline {section}{\numberline {3}Functions}{4}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Function calls}{4}{subsection.3.1}% 
