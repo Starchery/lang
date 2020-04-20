@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Arch Linux) (preloaded format=xelatex 2020.4.13)  20 APR 2020 16:51
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Arch Linux) (preloaded format=xelatex 2020.4.13)  20 APR 2020 18:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -179,26 +179,26 @@ File: lstlang2.sty 2019/09/10 1.8c listings language file
 ) (./syntax.aux)
 \openout1 = `syntax.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
 \AtBeginShipoutBox=\box30
-Package hyperref Info: Link coloring OFF on input line 24.
+Package hyperref Info: Link coloring OFF on input line 41.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -208,18 +208,18 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count108
 )
-LaTeX Info: Redefining \ref on input line 24.
-LaTeX Info: Redefining \pageref on input line 24.
-LaTeX Info: Redefining \nameref on input line 24.
+LaTeX Info: Redefining \ref on input line 41.
+LaTeX Info: Redefining \pageref on input line 41.
+LaTeX Info: Redefining \nameref on input line 41.
  (./syntax.out) (./syntax.out)
 \@outlinefile=\write3
 \openout3 = `syntax.out'.
 
 \c@lstlisting=\count109
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 26.
+(Font)              <14.4> on input line 43.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 26.
+(Font)              <7> on input line 43.
  (./syntax.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 3.
@@ -239,26 +239,26 @@ File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 
 ]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 66.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 80.
  [2]
 (./syntax.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 85.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 100.
  [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 85.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 100.
  (./syntax.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 85.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 85.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 100.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 100.
 Package rerunfilecheck Info: File `syntax.out' has not changed.
-(rerunfilecheck)             Checksum: 39BDD88EB924B80724FA9E458F398A99.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 85.
+(rerunfilecheck)             Checksum: 0B5C5424B0A604B41D2F09DA6A4EDC48.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 100.
  ) 
 Here is how much of TeX's memory you used:
- 9426 strings out of 492483
- 132059 string characters out of 6134979
- 403534 words of memory out of 5000000
- 13876 multiletter control sequences out of 15000+600000
+ 9431 strings out of 492483
+ 132085 string characters out of 6134979
+ 405534 words of memory out of 5000000
+ 13881 multiletter control sequences out of 15000+600000
  7769 words of font info for 42 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 31i,14n,45p,212b,1620s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 31i,14n,45p,212b,1628s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on syntax.pdf (3 pages).

@@ -5,6 +5,9 @@
         {{\small \texttt{pivotsallit@gmail.com}}}}
     \title{Lang Syntax Reference}
 
+    % \usepackage{syntonly}
+    % \syntaxonly % for debugging; comment this out
+
     \usepackage{url}
     \usepackage{hyperref}
     \usepackage{listings}
@@ -17,9 +20,23 @@
         tabsize=4
     }
 
+    \newcommand{\code}{\lstinline}
+    
+    \newcommand{\br}{\\ [0.5em] \hline \\ [-0.5em]}
 
-    % \usepackage{syntonly}
-    % \syntaxonly % for debugging; comment this out
+    \newenvironment{data}
+    {
+        \begin{center}
+        \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
+    }
+    {
+        \end{tabular*}
+        \end{center}
+    }
+
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
+%----------------------------------------------------------------------------%
 
 \begin{document}
     \maketitle
@@ -38,45 +55,43 @@
 
     \section{Miscellaneous} 
         \subsection{Commenting}
-            \begin{center}
-                \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
-                    Until end of line & \lstinline|-- ...| \\ [0.5em]
-                    \hline \\ [-0.5em]
-                    Nestable          & \lstinline$--/ ... /--$ \\ [0.5em]
-                \end{tabular*}
-            \end{center}
+            \begin{data}
+                Until end of line & 
+                    \code|-- This is a comment.| \br
+                Nestable          & 
+                    \code$--/ This is a comment. /--$
+            \end{data}
 
             \subsubsection{Documentation comment}
-                \begin{center}
-                    \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
-                        Until end of line & \lstinline$--| ...$ 
-                        \\ [0.5em] \hline \\ [-0.5em]
-                        Nestable          & \lstinline$--| ... |--$
-                        \\ [0.5em]
-                    \end{tabular*}
-                \end{center}
+                \begin{data}
+                    Until end of line & 
+                        \code|-- This is a comment.| \br
+                    Nestable          & 
+                        \code$--| This is a comment. |--$
+                \end{data}
 
         \subsection{Tokens}
-            \begin{center}
-                \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
-                    Case-sensitive       & \lstinline|x =/= X.| 
-                    \\ [0.5em] \hline \\ [-0.5em]
-                    kebab-case-variables & \lstinline|avogadro's-number := 6.022e23.|
-                    \\ [0.5em] \hline \\ [-0.5em]
-                    Upper-Kebab-Types    & \lstinline|type 2D-Point := { x: Z, y: Z. }.|
-                    \\ [0.5em] \hline \\ [-0.5em]
-                    Identifier regexp    & 
-                        \lstinline|[_a-zA-Z!0&*/:<=>?^][_a-zA-Z!0&*/:<=>?^0-9.+-]*|
-                \end{tabular*}
-            \end{center}
+            \begin{data}
+                Case-sensitive       & 
+                    \code|x =/= X.| \br
+                kebab-case-variables & 
+                    \code|avogadro's-number := 6.022e23.| \br
+                Upper-Kebab-Types    & 
+                    \code|type 2D-Point := { x: Z, y: Z. }.| \br
+                Identifier regexp    & 
+                    \code|[_a-zA-Z!0&*/:<=>?^][_a-zA-Z!0&*/:<=>?^0-9.+-]*|
+            \end{data}
             
+        \subsection{Variable assignment/declaration}
+            \begin{data}
+                Declaration        & 
+                    \code|x := 3.|             \br
+                Assignment         & 
+                    \code|x :- 3. x :- x + 2.| \br
+                Scoped Declaration & 
+                    \code|let x := expr in { ... }|
+            \end{data}
 
-
-% \paragraph{Until end of line}
-% \verb|-- ...|
-% \paragraph{Nestable}
-% \verb|(* ... *)|
-       
     % TODO: add more stuff
 
     \newpage
