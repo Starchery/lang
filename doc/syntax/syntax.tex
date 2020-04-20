@@ -1,0 +1,85 @@
+\documentclass[a4paper,12pt]{article}
+    \author{
+        Randy Henry \\ 
+        \href{mailto:pivotsallit@gmail.com}
+        {{\small \texttt{pivotsallit@gmail.com}}}}
+    \title{Lang Syntax Reference}
+
+    \usepackage{url}
+    \usepackage{hyperref}
+    \usepackage{listings}
+
+    \lstset{
+        language=Haskell,
+        basicstyle=\footnotesize\ttfamily,
+        frame=single,
+        keepspaces=true,
+        tabsize=4
+    }
+
+
+    % \usepackage{syntonly}
+    % \syntaxonly % for debugging; comment this out
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \newpage
+
+    \section{Introduction}
+        This paper walks through the "Syntax Across Languages" \cite{SAL}
+        page, describing how each phenomenon it references would be translated
+        into valid \textsc{Lang} syntax.
+
+        This is meant not as an introductory guide to \textsc{Lang}, but as a sort 
+        of formal reference for how common design patterns would appear 
+        in \textsc{Lang} code out in the wild.
+
+    \section{Miscellaneous} 
+        \subsection{Commenting}
+            \begin{center}
+                \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
+                    Until end of line & \lstinline|-- ...| \\ [0.5em]
+                    \hline \\ [-0.5em]
+                    Nestable          & \lstinline$--/ ... /--$ \\ [0.5em]
+                \end{tabular*}
+            \end{center}
+
+            \subsubsection{Documentation comment}
+                \begin{center}
+                    \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
+                        Until end of line & \lstinline$--| ...$ 
+                        \\ [0.5em] \hline \\ [-0.5em]
+                        Nestable          & \lstinline$--| ... |--$
+                        \\ [0.5em]
+                    \end{tabular*}
+                \end{center}
+
+        \subsection{Tokens}
+            \begin{center}
+                \begin{tabular*}{\textwidth}{ l@{\extracolsep{\fill}}l }
+                    Case-sensitive       & \lstinline|x =/= X.| 
+                    \\ [0.5em] \hline \\ [-0.5em]
+                    kebab-case-variables & \lstinline|avogadro's-number := 6.022e23.|
+                    \\ [0.5em] \hline \\ [-0.5em]
+                    Upper-Kebab-Types    & \lstinline|type 2D-Point := { x: Z, y: Z. }.|
+                    \\ [0.5em] \hline \\ [-0.5em]
+                    Identifier regexp    & 
+                        \lstinline|[_a-zA-Z!0&*/:<=>?^][_a-zA-Z!0&*/:<=>?^0-9.+-]*|
+                \end{tabular*}
+            \end{center}
+            
+
+
+% \paragraph{Until end of line}
+% \verb|-- ...|
+% \paragraph{Nestable}
+% \verb|(* ... *)|
+       
+    % TODO: add more stuff
+
+    \newpage
+    \bibliographystyle{apalike}
+    \bibliography{syntax}
+\end{document}
