@@ -8,3 +8,8 @@
 \contentsline {subsection}{\numberline {2.6}Comparisons}{4}{subsection.2.6}% 
 \contentsline {section}{\numberline {3}Functions}{4}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}Function calls}{4}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Function definitions}{5}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}Composition}{5}{subsection.3.3}% 
+\contentsline {section}{\numberline {4}Control Flow}{5}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}Sequencing}{5}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}If \dots {} then \dots {}}{5}{subsection.4.2}% 

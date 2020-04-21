@@ -12,6 +12,7 @@
     \usepackage{hyperref}
     \usepackage{listings}
     \usepackage{xcolor}
+    \usepackage{amssymb}
 
     \lstset{
         language=Haskell,
@@ -70,9 +71,9 @@
 \subsection{Documentation comment}
     \begin{data}
         Until end of line & 
-            \code|-- This is a comment.| \br
+            \code$--| This is a comment.$ \br
         Nestable          & 
-            \code$--| This is a comment. |--$
+            \code$--|| This is a comment. ||--$
     \end{data}
 
 \subsection{Tokens}
@@ -105,7 +106,7 @@ x :- 3. -- mutable
 x :- x + 2. 
             \end{lstlisting} \br
         Scoped Declaration & 
-            \code|let x := expr in { ... }.|
+            \code[mathescape=true]|let x := expr in { $\ldots$ }.|
     \end{data}
 
 \subsection{Grouping}
@@ -137,9 +138,15 @@ x :=
 \begin{data}
     Deep Equality  & 
         \code[mathescape=true]
-        |$\pi$ = $\tau$ / 2, 3 =/= 4.|       \br
+        |$\pi$ = $\pi$, 3 =/= 4, 3 $\neq$ 4.|       \br
     Comparison     &
-        \code|x > y, y < x. a <= b, b >= a.| \br
+        \begin{lstlisting}[mathescape=true]
+x > y, y < x.
+
+a <= b, b >= a.
+
+n $\geq$ m, m $\leq$ n.
+        \end{lstlisting} \br
     Ordering (inferior, equal, or superior) &
         \code|compare "abc" "bac". -- LT|    \br
     Extreme values &
@@ -151,15 +158,72 @@ x :=
 \subsection{Function calls}
 \begin{data}
     Parametrized  &
-        \code|f a b| \br
+        \begin{lstlisting}
+f a b,
+a.f(b). -- equivalent
+        \end{lstlisting} \br
     No parameters &
-        \code|f|     \br
+        \code|f.|     \br
     Partial application (given 1\textsuperscript{st}) &
-        \code|map filter(even?) xs| \br
+        \begin{lstlisting}
+map filter(even?) nested-list,
+filter(2 >) xs. -- binary infix
+        \end{lstlisting} \\
     \textcolor{white}{
     Partial application} (given 2\textsuperscript{nd}) &
-        \code|map filter(,xs) [even?, divisible-by-3?]| \br
+        \begin{lstlisting}
+map filter(,xs) [even?, div-by-3?],
+filter(> 2) xs.
+        \end{lstlisting}
 \end{data}
+
+\subsection{Function definitions}
+\begin{data}
+    Typed &
+        \begin{lstlisting}[mathescape=true]
+index: [String], Nat -> String,
+index xs i := { $\ldots$ }.
+
+-- inline
+        index: (xs: [String], i: $\mathbb{N}$) -> String := $\ldots$
+        \end{lstlisting} \br
+    Inferred &
+        \code[mathescape=true]|index xs i := { $\ldots$ }.|\br
+    Anonymous &
+        \begin{lstlisting}[mathescape=true]
+\x. { x + x. }, -- braces optional
+f := $\lambda$x. $\lambda$y. x + y,
+f := $\lambda$x y. x + y. -- equivalent
+        \end{lstlisting} \br
+    Var args &
+        \begin{lstlisting}[mathescape=true]
+print-double: ...Num -> ().
+print-double ...xs := {
+    println 
+        (map 
+            (String $\circ$ ($\lambda$x. x + x)) 
+            xs
+        ).join ", ".
+}.
+        \end{lstlisting}
+\end{data}
+
+\subsection{Composition}
+\begin{lstlisting}[mathescape=true]
+(f o g) x,
+-- or
+(f $\circ$ g) x.
+\end{lstlisting}
+
+
+\section{Control Flow}
+\subsection{Sequencing}
+    \code[mathescape=true]|print x, print (x * 2), print (x $\times$ 4).|
+
+\subsection{If \ldots{} then \ldots{}}
+
+
+
 
 % TODO: add more stuff
 
