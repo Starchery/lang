@@ -20,8 +20,10 @@
         keepspaces=true,
         tabsize=4,
         morekeywords={
-            Nat,
-            println
+            Nat, println,
+            public, private,
+            from, impl, for,
+            trait, while, match
         }
     }
 
@@ -83,7 +85,7 @@
         kebab-case-variables & 
             \code|avogadro's-number := 6.022e23.| \br
         Upper-Kebab-Types    & 
-            \code|type 2D-Point := { x: Z, y: Z. }.|
+            \code|type 2D-Point := { x: Int, y: Int. }.|
     \end{data}
     
 \subsection{Variable assignment/declaration}
@@ -144,8 +146,6 @@ x :=
 x > y, y < x.
 
 a <= b, b >= a.
-
-n $\geq$ m, m $\leq$ n.
         \end{lstlisting} \br
     Ordering (inferior, equal, or superior) &
         \code|compare "abc" "bac". -- LT|    \br
@@ -160,7 +160,7 @@ n $\geq$ m, m $\leq$ n.
     Parametrized  &
         \begin{lstlisting}
 f a b,
-a.f(b). -- equivalent
+a.f(b). -- UFCS
         \end{lstlisting} \br
     No parameters &
         \code|f.|     \br
@@ -185,26 +185,24 @@ index: [String], Nat -> String,
 index xs i := { $\ldots$ }.
 
 -- inline
-        index: (xs: [String], i: $\mathbb{N}$) -> String := $\ldots$
+index: (xs: [String], i: $\mathbb{N}$) $\to$ String := $\ldots$
         \end{lstlisting} \br
     Inferred &
         \code[mathescape=true]|index xs i := { $\ldots$ }.|\br
     Anonymous &
         \begin{lstlisting}[mathescape=true]
 \x. { x + x. }, -- braces optional
-f := $\lambda$x. $\lambda$y. x + y,
-f := $\lambda$x y. x + y. -- equivalent
+f := $\lambda$x + x, -- equivalent
+($\lambda$x + $\lambda$y) 3 4 -- 12
         \end{lstlisting} \br
     Var args &
         \begin{lstlisting}[mathescape=true]
-print-double: ...Num -> ().
-print-double ...xs := {
-    println 
-        (map 
-            (String $\circ$ ($\lambda$x. x + x)) 
-            xs
-        ).join ", ".
-}.
+print-double: ...$\mathbb{N} \to$ IO,
+print-double ...xs := 
+    println (doubles.join ", "),
+    where 
+        doubles := xs.map str-dub,
+        str-dub := String $\circ$ ($\lambda$x + x).
         \end{lstlisting}
 \end{data}
 
@@ -221,11 +219,91 @@ print-double ...xs := {
     \code[mathescape=true]|print x, print (x * 2), print (x $\times$ 4).|
 
 \subsection{If \ldots{} then \ldots{}}
+\begin{data}
+No else &
+    \code|pred => println f"{pred} is set".| \br
+If \ldots{} else \ldots{} &
+    \begin{lstlisting}
+if pred
+then println f"{pred} is set"
+else println "How could this be???".
+    \end{lstlisting} \br
+
+Stacked no-elses &
+    \begin{lstlisting}[mathescape=true]
+println     
+    pred  $\Rightarrow$ f"{pred} is true",
+    pred2 $\Rightarrow$ f"{pred2}, but not {pred}",
+    "Neither?? How could this be???".
+    \end{lstlisting} \br
+Guards &
+    \begin{lstlisting}[mathescape=true]
+println | pred      $\Rightarrow$ "Pred!" 
+        | pred2     $\Rightarrow$ "The other one!" 
+        | otherwise $\Rightarrow$ "Neither??"
+    \end{lstlisting} \br
+Pythonic &
+    \code|println "Yup" if pred else "Nope".|
+\end{data}
+
+\subsection{Pattern matching}
+\begin{lstlisting}[mathescape=true]
+match val
+    v1 $\Rightarrow$ $\ldots$,
+    v2 | v3 $\Rightarrow$ $\ldots$,
+    _ $\Rightarrow$ $\ldots$.
+\end{lstlisting}
+
+\subsection{Looping}
+\begin{data}
+While condition &
+    \code[mathescape=true]|while c { $\ldots$ }| \br
+Until condition &
+    \code[mathescape=true]|until c { $\ldots$ }| \br
+For value in range &
+    \begin{lstlisting}[mathescape=true]
+(1..10).map $\lambda$i. $\ldots$
+for i in 1..10 { $\ldots$ }
+    \end{lstlisting} \br
+For value in descending range &
+    \begin{lstlisting}[mathescape=true]
+(10..1).map $\lambda$i. $\ldots$
+for i in 10..1 { $\ldots$ }
+    \end{lstlisting} \br
+For value in custom range &
+    \begin{lstlisting}[mathescape=true]
+(2,4..10).map $\lambda$i. $\ldots$
+for i in 2,4..10 { $\ldots$ }
+    \end{lstlisting}
+\end{data}
+
+
+\section{Types}
+\begin{data}
+    Declaration         & \code[mathescape=true]|type T := $\ldots$| \br
+    Annotation          & \code|pi: Real = 3.14| \br
+    Computed conversion & \code|Int 3.14, String 3.|
+\end{data}
+
+
+\section{Classes / Traits}
+\begin{data}
+    Declaration & \code[mathescape=true]|trait A := $\ldots$| \br
+    Inheritance & \code[mathescape=true]|impl A for T { $\ldots$ }.|
+\end{data}
+
+
+\section{Modules}
+\begin{data}
+    Declaration      & \code$(private | public) module m.$ \br
+    Selective export & \code$(private | public) f.$        \br
+    Import all       & \code|import m.|                    \br
+    Selectively      & \code|from p import name1, name2.|
+\end{data}
 
 
 
-
-% TODO: add more stuff
+% TODO: flesh this out
 
 %----------------------------------------------------------------------------%
 %----------------------------------------------------------------------------%
