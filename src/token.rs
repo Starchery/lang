@@ -19,6 +19,7 @@ pub(crate) enum Token<'src> {
     #[regex(r"[a-zA-Z]+")]
     Id(&'src str),
 
+    #[regex(r"\p{White_Space}", logos::skip)]
     EOF,
 
     #[error]
