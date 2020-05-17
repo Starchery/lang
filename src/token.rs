@@ -18,14 +18,15 @@ enum Token<'src> {
 
     Lit(Literal<'src>),
 
-    #[regex("[a-zA-Z_$][a-zA-Z0-9_$]*")]
+    #[regex("[a-zA-Z_]+[a-zA-Z_-]*[?!]?",
+            |lex| lex.slice())]
     Id(&'src str),
 
     #[regex(r"\p{White_Space}", logos::skip)]
     EOF,
 
     #[error]
-    InvalidToken
+    UnexpectedToken
 }
 
 // #[derive(Debug, PartialEq)]
@@ -44,19 +45,22 @@ enum Token<'src> {
 #[derive(Logos, Debug, PartialEq)]
 pub(crate)
 enum Literal<'src> {
-    #[regex(r#""([^"\\]|\\t|\\u|\\n|\\")*""#)]
+    #[regex(r#""[^"\\]*(?:\\.[^"\\]*)*""#)]
     Str(&'src str),
 
-    #[regex(r#"f"([^"\\]|\\t|\\u|\\n|\\")*""#)]
+    #[regex(r#"f"[^"\\]*(?:\\.[^"\\]*)*""#)]
     FStr(&'src str),
 
-    #[regex("[0-9]*[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+",
+    #[regex("[1-9]+([0-9]|_[0-9])*([eE][+-]?[0-9]+)?",
       |lex| lex.slice().parse())]
     Int(i64),
 
-    #[regex("[0-9]*\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+",
+    #[regex(r#"([0-9]|_[0-9])+\.([0-9]|_[0-9])*([eE][+-]?[0-9]+)?"#,
       |lex| lex.slice().parse())]
     Float(f64),
+
+    #[error]
+    UnexpectedLiteral,
 }
 
 #[derive(Logos, Debug, PartialEq)]
@@ -151,6 +155,9 @@ enum Symbol {
 
     #[token("=>")]
     FatArrow,
+
+    #[error]
+    UnexpectedSymbol,
 }
 
 impl Lexeme for Symbol {}
@@ -174,12 +181,12 @@ fn assert_lex<'a, Token>(
     assert_eq!(lex.next(), None);
 }
 
-#[test]
-fn ident() {
-    assert_lex(
-        "test words",
-        &[ (Token::Id("test"), "test", 0..4)
-         , (Token::Id("words"), "words", 5..10)
-         ]
-    )
-}
+// #[test]
+// fn ident() {
+//     assert_lex(
+//         "test words",
+//         &[ (Token::Id("test"), "test", 0..4)
+//          , (Token::Id("words"), "words", 5..10)
+//          ]
+//     )
+// }
