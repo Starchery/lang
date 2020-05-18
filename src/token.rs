@@ -45,21 +45,20 @@ enum Token<'src> {
 #[derive(Logos, Debug, PartialEq)]
 pub(crate)
 enum Literal<'src> {
-    #[regex(r#""[^"\\]*(?:\\.[^"\\]*)*""#)]
+    #[regex(r#""[^"\\]*(?:\\.[^"\\]*)*""#, |lex| lex.slice())]
     Str(&'src str),
 
-    #[regex(r#"f"[^"\\]*(?:\\.[^"\\]*)*""#)]
+    #[regex(r#"f"[^"\\]*(?:\\.[^"\\]*)*""#, |lex| lex.slice())]
     FStr(&'src str),
 
-    #[regex("[1-9]+([0-9]|_[0-9])*([eE][+-]?[0-9]+)?",
-      |lex| lex.slice().parse())]
+    #[regex(r#"[1-9]+[0-9]*|0"#, |lex| lex.slice().parse())]
     Int(i64),
 
-    #[regex(r#"([0-9]|_[0-9])+\.([0-9]|_[0-9])*([eE][+-]?[0-9]+)?"#,
-      |lex| lex.slice().parse())]
+    #[regex(r#"[0-9]+\.[0-9]+"#, |lex| lex.slice().parse())]
     Float(f64),
 
     #[error]
+    #[regex(r"\p{White_Space}", logos::skip)]
     UnexpectedLiteral,
 }
 
@@ -157,6 +156,7 @@ enum Symbol {
     FatArrow,
 
     #[error]
+    #[regex(r"\p{White_Space}", logos::skip)]
     UnexpectedSymbol,
 }
 
