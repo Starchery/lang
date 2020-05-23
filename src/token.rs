@@ -1,52 +1,41 @@
 #![allow(dead_code)]
 
-trait Lexeme { }
-
-#[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub(crate)
-enum Symbol {
-    //special
+enum Token<'src> {
+    // special
     EOF,
-    Identifier,
-    Int,
-    Float,
-    Str,
-    FStr,
-    Char,
+    UnexpectedSymbol,
+    Identifier(&'src str),
+    Operator(&'src str),
+
+    // literals
+    Int(i64),
+    Rational(i64, i64),
+    Float(f64),
+    Str(&'src str),
+    FStr(&'src str),
+    Char(char),
 
     // delimiters
-    LParen,
-    RParen,
-    LCurly,
-    RCurly,
-    LBrack,
-    RBrack,
+    LParen, RParen,
+    LCurly, RCurly,
+    LBrack, RBrack,
     Comma,
     Dot,
 
     // single-char
-    Dash,
     Equals,
-    Plus,
     Lambda,
-    Star,
-    Slash,
     Pipe,
-    Quote,
+    Quote, SingleQuote,
     Semi,
-    Apostrophe,
-    Hash,
     Colon,
-    Lt,
-    Gt,
 
      // multi-char
     Arrow,
-    Colons,
-    EqEq,
-    Leq,
-    Geq,
+    ColCol,
     DashDash,
+    PipeDash,
     FatArrow,
-    UnexpectedSymbol,
 }
