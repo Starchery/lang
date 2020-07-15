@@ -4,6 +4,9 @@ A (soon to be) statically typed, interpreted,
 functional-first, multi-paradigm programming language.
 Inspired by Haskell, Prolog, Ruby, and Python.
 
+
+See the [unfinished language spec](https://github.com/Starchery/lang/blob/master/doc/syntax/syntax.pdf) for a brief overview.
+
 ---
 
 ## Planned features
